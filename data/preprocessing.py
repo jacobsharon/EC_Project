@@ -24,7 +24,7 @@ White Blood Cell Count (wc) (Numerical): Replace missing values with the mean of
 Red Blood Cell Count (rc) (Numerical): Replace missing values with the mean of the dataset feature
 Hypertension (htn) (Categorical): Replace missing values with 'no'
 Diabetes Mellitus (dm) (Categorical): Replace missing values with 'no'
-Coronary Artery Disease (cad) (Categorical): Replace missing values with 'no'
+Coronary Artery Disease (cad) (Categorical): Replace missing values with 'no' 
 Appetite (appet) (Categorical): Replace missing values with 'good'
 Pedal Edema (pe) (Categorical): Replace missing values with 'no'
 Anemia (ane) (Categorical): Replace missing values with 'no'
@@ -35,7 +35,7 @@ import csv
 import pandas as pd
 import numpy as np
 
-file_path = "/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/raw_ckd_dataset.csv"
+file_path = "/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/datasets/raw_ckd_dataset.csv"
 
 #1. Open the file
 with open(file_path, "r") as CKD:
@@ -94,13 +94,13 @@ with open(file_path, "r") as CKD:
             formatted_means[column] = mean # Keep original if no formatting specified
 
     #8. output formatted means to data file
-    with open('/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/numeric_attribute_averages.csv' , 'w', newline="") as avg:
+    with open('/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/default_attribute_values/numeric_attribute_averages.csv' , 'w', newline="") as avg:
         avg_writer = csv.writer(avg)
         avg_writer.writerow(["attribute", "formatted_mean"])
         avg_writer.writerows(formatted_means.items())
     
     #9. Replace the missing numeric values with the average
-    means_df = pd.read_csv("data/numeric_attribute_averages.csv")
+    means_df = pd.read_csv("data/default_attribute_values/numeric_attribute_averages.csv")
     means_dict = dict(zip(means_df["attribute"], means_df["formatted_mean"]))
 
     #10. Ensure numeric conversion for target columns
@@ -111,16 +111,16 @@ with open(file_path, "r") as CKD:
     df.fillna(value=means_dict, inplace=True)
 
     #12. Replace the missing categorical values with their respective normal values
-    default_cat_df = pd.read_csv("data/categorical_attribute_defaults.csv")
+    default_cat_df = pd.read_csv("data/default_attribute_values/categorical_attribute_defaults.csv")
     default_cat_dict = dict(zip(default_cat_df["attribute"], default_cat_df["default_value"]))
     for col, default_value in default_cat_dict.items():
         df[col] = df[col].fillna(default_value)
 
     #13. Replace the missing nominal values with the mode
-    default_nom_df = pd.read_csv("data/nominal_attribute_defaults.csv")
+    default_nom_df = pd.read_csv("data/default_attribute_values/nominal_attribute_defaults.csv")
     default_nom_dict = dict(zip(default_nom_df["attribute"] , default_nom_df["default_value"]))
     for col, default_value in default_nom_dict.items():
         df[col] = df[col].fillna(default_value)
 
     #14. Output final cleaned dataset
-    df.to_csv("data/cleaned_ckd_dataset.csv", index=False)
+    df.to_csv("data/datasets/cleaned_ckd_dataset.csv", index=False)
