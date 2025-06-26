@@ -51,6 +51,6 @@ python main.py
 - SHAP: Lundberg & Lee, 2017 (https://github.com/slundberg/shap)
 
 ## Author
-Jacob Sharon, BS, MLS(ASCP)<sup>CM</sup>
+Jacob Sharon, BS, MLS(ASCP)<sup>CM</sup>  
 Graduate Student, Computer Science  
 Missouri State University
