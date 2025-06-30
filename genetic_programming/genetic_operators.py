@@ -55,7 +55,7 @@ def crossover(selection_completed_pop, N_size):
         if validate_tree(candidate_2, feature_types):
             crossover_completed_pop.append(candidate_2)
 
-    return crossover_completed_pop[:N_size]  # truncate if you overshoot
+    return crossover_completed_pop[:N_size]
 
 def mutation(crossover_completed_pop):
     mutated_pop = []
