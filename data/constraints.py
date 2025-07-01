@@ -59,17 +59,17 @@ numerical_value_constraints_dict = {
 nominal_values_constraints_dict = {
     'al': [0, 1, 2, 3, 4, 5],
     'su': [0, 1, 2, 3, 4, 5],
-    'rbc': [0, 1],   # e.g., normal/abnormal
-    'pc': [0, 1],
-    'pcc': [0, 1],   # present/notpresent
-    'ba': [0, 1],
-    'htn': [0, 1],   # no/yes
-    'dm': [0, 1],
-    'cad': [0, 1],
-    'appet': [0, 1], # good/poor
-    'pe': [0, 1],
-    'ane': [0, 1],
-    'class': [0, 1]  # notckd/ckd (verify which is which if you care)
+    'rbc': ['normal', 'abnormal'],
+    'pc': ['normal', 'abnormal'],
+    'pcc': ['present', 'notpresent'],
+    'ba': ['present', 'notpresent'],
+    'htn': ['yes', 'no'],
+    'dm': ['yes', 'no'],
+    'cad': ['yes', 'no'],
+    'appet': ['good', 'poor'],
+    'pe': ['yes', 'no'],
+    'ane': ['yes', 'no'],
+    'class': ['ckd', 'notckd']
 }
 
 feature_types = {

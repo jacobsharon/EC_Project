@@ -1,5 +1,6 @@
 '''
 File: toolbox.py
+The purpose of this file is to define the DEAP toolbox to be used in the evolutionary algorithm. 
 '''
 
 from deap import gp, base, tools
