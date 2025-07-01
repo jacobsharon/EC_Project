@@ -35,16 +35,17 @@ CKD (class) (Categorical): No missing values
 import csv
 import pandas as pd
 import numpy as np
+from constraints import numerical_value_constraints_dict
 
 file_path = "/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/datasets/raw_ckd_dataset.csv"
 
 #1. Open the file
 with open(file_path, "r") as CKD:
-    #create arrays of data and attributes
+    #2. create arrays of data and attributes
     data_rows = []
     column_names = []
     
-    #2. specify numeric attributes to calculate averages
+    #specify numeric attributes to calculate averages
     numeric_columns = [
     'age', 'bp', 'bgr', 'bu', 'sc', 
     'sod', 'pot', 'hemo', 'pcv', 'wc', 'rc']
@@ -123,5 +124,15 @@ with open(file_path, "r") as CKD:
     for col, default_value in default_nom_dict.items():
         df[col] = df[col].fillna(default_value)
 
-    #14. Output final cleaned dataset
+    # 14. Encode nominal features as 0 or 1
+    encode_columns = ['al', 'su', 'rbc', 'pc', 'pcc', 'ba', 'htn', 'dm', 'cad', 'appet', 'pe', 'ane', 'class']
+    for col in encode_columns:
+        df[col] = pd.Categorical(df[col]).codes
+
+    #15. Enforce numerical feature constrains
+    for col, (min_value, max_values) in numerical_value_constraints_dict.items():
+        if col in df[col]:
+            df = df[df[col].between(min_value, max_values)]
+
+    #15. Output final cleaned dataset
     df.to_csv("data/datasets/cleaned_ckd_dataset.csv", index=False)

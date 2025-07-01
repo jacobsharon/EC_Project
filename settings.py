@@ -1,7 +1,7 @@
 """
 This file contains global variables used within this project. 
 """
-
+RANDOM_SEED = 103
 POPULATION = 50
 GENERATIONS = 50
 TOURNAMENT_SIZE = 2

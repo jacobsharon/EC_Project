@@ -1,6 +1,9 @@
 '''
 File: constraints.py
-The purpose of this file is to define upper and lower bounds of numerical features based on diagnostic feasibility.
+The purpose of this file is to define:
+1. Upper and lower bounds of numerical features based on diagnostic feasibility.
+2. Allowed nominal and binary values for categorical features.
+3. Feature type classification (numerical, nominal, binary) to support type-aware operations in genetic programming.
 
 -------------------
 Numerical Features 
@@ -56,15 +59,43 @@ numerical_value_constraints_dict = {
 nominal_values_constraints_dict = {
     'al': [0, 1, 2, 3, 4, 5],
     'su': [0, 1, 2, 3, 4, 5],
-    'rbc': ['normal', 'abnormal'],
-    'pc': ['normal', 'abnormal'],
-    'pcc': ['present', 'notpresent'],
-    'ba': ['present', 'notpresent'],
-    'htn': ['yes', 'no'],
-    'dm': ['yes', 'no'],
-    'cad': ['yes', 'no'],
-    'appet': ['good', 'poor'],
-    'pe': ['yes', 'no'],
-    'ane': ['yes', 'no'],
-    'class': ['ckd', 'notckd']
+    'rbc': [0, 1],   # e.g., normal/abnormal
+    'pc': [0, 1],
+    'pcc': [0, 1],   # present/notpresent
+    'ba': [0, 1],
+    'htn': [0, 1],   # no/yes
+    'dm': [0, 1],
+    'cad': [0, 1],
+    'appet': [0, 1], # good/poor
+    'pe': [0, 1],
+    'ane': [0, 1],
+    'class': [0, 1]  # notckd/ckd (verify which is which if you care)
+}
+
+feature_types = {
+    'age': 'numerical',
+    'bp': 'numerical',
+    'sg': 'numerical',
+    'al': 'nominal',
+    'su': 'nominal',
+    'rbc': 'binary',
+    'pc': 'binary',
+    'pcc': 'binary',
+    'ba': 'binary',
+    'bgr': 'numerical',
+    'bu': 'numerical',
+    'sc': 'numerical',
+    'sod': 'numerical',
+    'pot': 'numerical',
+    'hemo': 'numerical',
+    'pcv': 'numerical',
+    'wc': 'numerical',
+    'rc': 'numerical',
+    'htn': 'binary',
+    'dm': 'binary',
+    'cad': 'binary',
+    'appet': 'binary',
+    'pe': 'binary',
+    'ane': 'binary',
+    'class': 'binary'
 }
