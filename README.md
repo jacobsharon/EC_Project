@@ -8,12 +8,35 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 
 ### Project Structure
 
-- `main.py` – Runs the project
-- `config.py` – Global settings and parameters
-- `data/preprocessing.py` – Dataset cleaning and imputation
-- `genetic_programming/` – Genetic Programming and NSGA-II algorithm implementation
-- `explain/SHAP_analysis.py` – SHAP-based feature importance explanation
-- `results/` – Output logs, Pareto fronts, and performance plots
+- `main.py` – Entry point: runs the evolutionary loop, evaluates individuals, and generates output
+- `README.md` – Project overview and usage guide
+- `LICENSE` – License file
+- `requirements.txt` – Python dependencies
+- `settings.py` – Global constants (e.g., population size, generations)
+
+#### data/
+- `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing
+- `raw_ckd_dataset.csv` – Original dataset
+- `default_attribute_values` – Reference values used for imputation
+
+#### classification_model/
+- `classification_model.py` – Classification model and train/test data preparation
+
+#### genetic_programming/
+- `creator_setup.py` – DEAP creator for individuals and fitness
+- `evaluate_population.py` – Fitness evaluation (F1 score and complexity)
+- `initialize.py` – Population initialization logic
+- `primitives.py` – Primitive and terminal set definitions
+- `toolbox.py` – Genetic operators (crossover, mutation, selection)
+
+#### explain/
+- `SHAP_analysis.py` – SHAP-based feature importance analysis
+
+#### results/
+- `plots/` – Pareto front and model performance plots
+- `tree_visualizations/` – PNG files of evolved tree structures
+- `Gen_50_Tree_Functions.txt` – Final generation trees in functional form
+- `visualize_tree.py` – Script for rendering trees using Graphviz
 
 ---
 
