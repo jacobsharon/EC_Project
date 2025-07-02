@@ -17,6 +17,7 @@ def evaluate_population(population, X_train, y_train):
     for i, tree in enumerate(population):
         tree_func = gp.compile(tree, pset=primitive_set)                #Turn the tree into a python compiled function
         scores = [tree_func(**row) for _, row in X_train.iterrows()]    #Store raw scores from tree func for each row in the training data
+        complexity = len(tree)
 
         #3. Try multiple thresholds to find best F1
         thresholds = np.linspace(min(scores), max(scores), 100)
@@ -31,7 +32,7 @@ def evaluate_population(population, X_train, y_train):
                 best_thresh = t
 
         #4. Save the best F1 and threshold generated during the threshold sweep
-        tree.fitness.values = (best_f1,)
+        tree.fitness.values = (best_f1, complexity)
         tree.threshold = best_thresh 
 
     return population
