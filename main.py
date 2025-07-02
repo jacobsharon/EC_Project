@@ -7,8 +7,6 @@ from settings import POPULATION, GENERATIONS
 import matplotlib.pyplot as plt
 import numpy as np
 from deap.tools.emo import sortNondominated
-import os
-import graphviz
 from results.visualize_tree import save_best_tree_as_image
 
 #1. Initialize the classification model
