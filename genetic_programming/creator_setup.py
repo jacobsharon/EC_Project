@@ -1,5 +1,6 @@
 '''
 File: creator_setup.py
+
 Purpose: Define custom DEAP classes for symbolic genetic programming.
 This initializes:
 - FitnessMax: a fitness class where higher fitness is better (for maximization).

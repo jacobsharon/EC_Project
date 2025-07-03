@@ -7,10 +7,15 @@ Functional Set - Operations
 Primitive Set  = Terminal Set + Functional Set
 '''
 
-from settings import feature_names
-from deap import gp
+# Standard Libraries
 import operator
 import math
+
+# Third Party Libraries
+from deap import gp
+
+# Local Application Modules
+from settings import feature_names
 
 #1. Define primitive set with typed specification
 primitive_set = gp.PrimitiveSetTyped("MAIN", [float] * len(feature_names), float)

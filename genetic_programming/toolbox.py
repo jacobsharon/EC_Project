@@ -37,6 +37,6 @@ toolbox.register("crossover" , gp.cxOnePoint)
 
 #Mutations
 #randomly selects a point on the tree and replaces the subtree with a randomly generated expression expr
-toolbox.register("mutation", gp.mutUniform, expr=toolbox.expr, pset=primitive_set)
+toolbox.register("mutation", gp.mutUniform, expr = toolbox.expr, pset = primitive_set)
 
 toolbox.register("clone", lambda ind: creator.Individual(ind))

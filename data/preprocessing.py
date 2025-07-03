@@ -32,9 +32,14 @@ Anemia (ane) (Categorical): Replace missing values with 'no'
 CKD (class) (Categorical): No missing values
 '''
 
+# Standard Libraries
 import csv
+
+# Third Party Libraries
 import pandas as pd
 import numpy as np
+
+# Local Application Modules
 from constraints import numerical_value_constraints_dict
 
 file_path = "/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/datasets/raw_ckd_dataset.csv"
