@@ -33,15 +33,9 @@ def initialize_classification_model():
     X[numerical_cols] = scaler.fit_transform(X[numerical_cols])
 
     #7. split into 5 folds
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_SEED)
-
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y, random_state=RANDOM_SEED)
+    print("Train CKD count:", sum(y_train))
+    print("Val CKD count:", sum(y_val))
+    
     #8. store each fold in an array of folds
-    folds = []
-    for train_index, test_index in skf.split(X, y):
-        X_train_fold = X.iloc[train_index]
-        X_test_fold = X.iloc[test_index]
-        y_train_fold = y.iloc[train_index]
-        y_test_fold = y.iloc[test_index]
-        folds.append((X_train_fold, X_test_fold, y_train_fold, y_test_fold))
-
-    return folds 
+    return [(X_train, X_val, y_train, y_val)]

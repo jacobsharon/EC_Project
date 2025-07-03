@@ -17,7 +17,7 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 #### data/
 - `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing
 - `raw_ckd_dataset.csv` – Original dataset
-- `default_attribute_values` – Reference values used for imputation
+- `default_attribute_values` – Reference values used for data cleaning and imputation
 
 #### classification_model/
 - `classification_model.py` – Classification model and train/test data preparation
@@ -26,17 +26,15 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 - `creator_setup.py` – DEAP creator for individuals and fitness
 - `evaluate_population.py` – Fitness evaluation (F1 score and complexity)
 - `initialize.py` – Population initialization logic
-- `primitives.py` – Primitive and terminal set definitions
-- `toolbox.py` – Genetic operators (crossover, mutation, selection)
+- `primitives.py` – DEAP Primitive and Terminal set definitions
+- `toolbox.py` – DEAP Genetic Operators (crossover, mutation, selection)
 
 #### explain/
 - `SHAP_analysis.py` – SHAP-based feature importance analysis
 
 #### results/
-- `plots/` – Pareto front and model performance plots
-- `tree_visualizations/` – PNG files of evolved tree structures
-- `Gen_50_Tree_Functions.txt` – Final generation trees in functional form
-- `visualize_tree.py` – Script for rendering trees using Graphviz
+- Auto-generated output directory (not version-controlled).
+- `visualize_tree.py` - Script for rendering trees using Graphviz
 
 ---
 
@@ -65,7 +63,7 @@ python main.py
 ## Objectives 
 - Develop interpretable GP-based classifiers for CKD detection
 - Optimize F1-score and model simplicity via NSGA-II
-- Enforce clinically meaningful constraints (e.g., albumin ≠ 0)
+- Enforce clinically meaningful feature constraints
 - Explain evolved models using SHAP
 
 ## References

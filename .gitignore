@@ -1,0 +1,12 @@
+# cache
+__pycache__/
+
+# Results / artifacts
+!data/cleaned_ckd_dataset.csv
+!data/raw_ckd_dataset.csv
+!results/visualize_tree.py
+*.png
+*.pdf
+*.csv
+*.sav
+results/

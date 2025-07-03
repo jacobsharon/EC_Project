@@ -1,13 +1,15 @@
 '''
 File: toolbox.py
+
 The purpose of this file is to define the DEAP toolbox to be used in the evolutionary algorithm. 
 '''
 
-from deap import gp, base, tools
+# Third Party Libraries
+from deap import gp, base, tools, creator
+
+# Local Application Modules
+import genetic_programming.creator_setup
 from genetic_programming.primitives import primitive_set
-import genetic_programming.creator_setup 
-from deap import creator 
-from genetic_programming.evaluate_population import evaluate_population
 
 toolbox = base.Toolbox()
 
@@ -35,6 +37,6 @@ toolbox.register("crossover" , gp.cxOnePoint)
 
 #Mutations
 #randomly selects a point on the tree and replaces the subtree with a randomly generated expression expr
-toolbox.register("mutation" , gp.mutUniform, expr = toolbox.expr, pset = primitive_set)
+toolbox.register("mutation", gp.mutUniform, expr=toolbox.expr, pset=primitive_set)
 
 toolbox.register("clone", lambda ind: creator.Individual(ind))
