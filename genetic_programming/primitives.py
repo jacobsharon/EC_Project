@@ -28,7 +28,10 @@ def if_then_else(condition: bool, out1: float, out2: float) -> float:
     return out1 if condition else out2
 
 def protectedDiv(x: float, y: float) -> float:
-    return x / y if y != 0 else 1
+    try:
+        return x / y if abs(y) > 1e-8 else 1.0
+    except (OverflowError, ZeroDivisionError):
+        return 1.0
 
 def protectedPow(x: float, y: float) -> float:
     try:

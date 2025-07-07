@@ -27,62 +27,49 @@ class GPModelWrapper:
     def predict(self, X_df):
         return np.array([self.func(**row) for _, row in X_df.iterrows()])
 
-# Extract tree strings from file
-def extract_tree_expressions(path):
-    tree_exprs = []
+# Extract tree string from Function: line
+def extract_tree_expression(path):
     with open(path, "r") as f:
         for line in f:
             if line.startswith("Function:"):
-                expr = line.split("Function:")[1].strip()
-                tree_exprs.append(expr)
-    return tree_exprs
+                return line.split("Function:")[1].strip()
+    raise ValueError("No 'Function:' line found in tree file.")
 
-# Load dataset
+# Load fold 1 data temporarily to initialize structure
 X_train, X_val, y_train, y_val = initialize_classification_model()[0]
 
-# Iterate over each max depth setting
-for depth in MAX_DEPTH:
-    for pop_size in POPULATION:
-        print(f"\n===== Running SHAP Analysis for pop {pop_size} max_depth {depth} =====")
-        
-        base_dir = f"results/pop_{pop_size}/max_depth_{depth}"
-        tree_path = os.path.join(base_dir, "Gen_50_Tree_Functions.txt")
-        shap_dir = os.path.join(base_dir, "SHAP_analysis")
-        train_dir = os.path.join(shap_dir, "train")
-        val_dir = os.path.join(shap_dir, "val")
-        os.makedirs(train_dir, exist_ok=True)
-        os.makedirs(val_dir, exist_ok=True)
+# Loop through each fold
+for fold in range(1, 6):
+    base_dir = f"results/final_results/fold_{fold}"
+    shap_dir = os.path.join(base_dir, "final_SHAP_analysis")
+    os.makedirs(shap_dir, exist_ok=True)
 
-        # Load trees
-        try:
-            tree_strs = extract_tree_expressions(tree_path)
-        except FileNotFoundError:
-            print(f"Missing: {tree_path}. Skipping depth {depth}")
+    for model_type in ["Best", "Elbow"]:
+        tree_path = os.path.join(base_dir, f"{model_type}_Tree.txt")
+        if not os.path.exists(tree_path):
+            print(f"Skipping {model_type} for Fold {fold}, file missing.")
             continue
 
-        print(f"Parsed {len(tree_strs)} tree expressions")
+        try:
+            # Only read actual tree expression
+            tree_expr = extract_tree_expression(tree_path)
 
-        # Analyze each tree
-        for i, expr in enumerate(tree_strs):
-            try:
-                print(f"Processing Tree {i+1}")
-                tree = gp.PrimitiveTree.from_string(expr, primitive_set)
-                compiled = gp.compile(tree, pset=primitive_set)
-                model = GPModelWrapper(compiled)
+            # Compile and wrap tree
+            tree = gp.PrimitiveTree.from_string(tree_expr, primitive_set)
+            compiled = gp.compile(tree, pset=primitive_set)
+            model = GPModelWrapper(compiled)
 
-                # SHAP on Training
-                explainer_train = shap.Explainer(model.predict, X_train)
-                shap_values_train = explainer_train(X_train)
-                shap.summary_plot(shap_values_train, X_train, show=False)
-                plt.savefig(f"{train_dir}/Tree{i+1}_shap_summary.png")
-                plt.close()
+            # Load data for current fold
+            X_train, X_val, y_train, y_val = initialize_classification_model()[fold - 1]
 
-                # SHAP on Validation
-                explainer_val = shap.Explainer(model.predict, X_val)
-                shap_values_val = explainer_val(X_val)
-                shap.summary_plot(shap_values_val, X_val, show=False)
-                plt.savefig(f"{val_dir}/Tree{i+1}_shap_summary.png")
-                plt.close()
+            # SHAP on validation set
+            explainer_val = shap.Explainer(model.predict, X_val)
+            shap_vals_val = explainer_val(X_val)
+            shap.summary_plot(shap_vals_val, X_val, show=False)
+            plt.title(f"SHAP Summary ({model_type}) Fold {fold}")
+            plt.tight_layout()
+            plt.savefig(os.path.join(shap_dir, f"{model_type}_Tree_SHAP.png"))
+            plt.close()
 
-            except Exception as e:
-                print(f"Error with Tree {i+1} at depth {depth}: {e}")
+        except Exception as e:
+            print(f"Error in SHAP for {model_type} tree fold {fold}: {e}")
