@@ -38,9 +38,20 @@ def initialize_classification_model():
     X[numerical_cols] = scaler.fit_transform(X[numerical_cols])
 
     #7. Split into 5 folds
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y, random_state=RANDOM_SEED)
-    print("Train CKD count:", sum(y_train))
-    print("Val CKD count:", sum(y_val))
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_SEED)
+
+    #8. Store folds
+    folds = []
+
+    #9. Split data into 5-folds for cross validation. 
+    for train_index, val_index in skf.split(X, y):
+        X_train, X_val = X.iloc[train_index], X.iloc[val_index]     # Using pd so have to use iloc
+        y_train, y_val = y.iloc[train_index], y.iloc[val_index]
+
+        folds.append((X_train, X_val, y_train, y_val))              # Append the current fold as a tuple to the array
+
+        print("Train CKD count:", sum(y_train))                     #   Printing for debugging
+        print("Val CKD count:", sum(y_val))
     
-    #8. Store each fold in an array of folds
-    return [(X_train, X_val, y_train, y_val)]
+    #8. Return the array of folds where each fold is a tuple of (X_train, X_val, y_train, y_val)
+    return folds
