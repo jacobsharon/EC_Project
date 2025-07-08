@@ -278,8 +278,7 @@ for key in numeric_keys:
     std = np.std(values)
     average_metrics.append((key, mean, std))
 
-os.makedirs("results/final_results/5_Fold_Summary", exist_ok=True)
-with open("results/final_results/fold_summary.txt", "w") as f:
+with open("results/final_results/5_fold_summary.txt", "w") as f:
     for name, mean, std in average_metrics:
         print(f"{name}: {mean:.4f} ± {std:.4f}")
         f.write(f"{name}: {mean:.4f} ± {std:.4f}\n")
