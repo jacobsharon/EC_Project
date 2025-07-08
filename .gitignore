@@ -2,12 +2,12 @@
 __pycache__/
 
 # Results / artifacts
+results/*
+!results/
+!results/elbow_locator.py
+!results/visualize_tree.py
 !data/cleaned_ckd_dataset.csv
 !data/raw_ckd_dataset.csv
-!results/visualize_tree.py
-!results/elbow_locator.py
 *.png
 *.pdf
-*.csv
 *.sav
-results/
