@@ -8,33 +8,34 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 
 ### Project Structure
 
-- `main.py` – Entry point: runs the evolutionary loop, evaluates individuals, and generates output
-- `README.md` – Project overview and usage guide
-- `LICENSE` – License file
-- `requirements.txt` – Python dependencies
-- `settings.py` – Global constants (e.g., population size, generations)
+- `main.py` – Entry point: runs the evolutionary loop, evaluates individuals, and generates output  
+- `README.md` – Project overview and usage guide  
+- `LICENSE` – License file  
+- `requirements.txt` – Python dependencies  
+- `settings.py` – Global constants (e.g., population size, generations)  
 
-#### data/
-- `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing
-- `raw_ckd_dataset.csv` – Original dataset
-- `default_attribute_values` – Reference values used for data cleaning and imputation
+### `data/`
+- `raw_ckd_dataset.csv` – Original dataset  
+- `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing  
+- `default_attribute_values/` – Reference values for imputing missing values  
 
-#### classification_model/
-- `classification_model.py` – Classification model and train/test data preparation
+### `classification_model/`
+- `classification_model.py` – Train/test data preparation with 5-fold stratified splitting  
 
-#### genetic_programming/
-- `creator_setup.py` – DEAP creator for individuals and fitness
-- `evaluate_population.py` – Fitness evaluation (F1 score and complexity)
-- `initialize.py` – Population initialization logic
-- `primitives.py` – DEAP Primitive and Terminal set definitions
-- `toolbox.py` – DEAP Genetic Operators (crossover, mutation, selection)
+### `genetic_programming/`
+- `creator_setup.py` – DEAP creator for individuals and fitness  
+- `evaluate_population.py` – Fitness evaluation (F1 score and complexity)  
+- `initialize.py` – Population initialization logic  
+- `primitives.py` – DEAP Primitive and Terminal set definitions  
+- `toolbox.py` – DEAP Genetic Operators (crossover, mutation, selection)  
 
-#### explain/
-- `SHAP_analysis.py` – SHAP-based feature importance analysis
+### `explain/`
+- `SHAP_analysis.py` – SHAP-based feature importance analysis  
 
-#### results/
-- Auto-generated output directory (not version-controlled).
-- `visualize_tree.py` - Script for rendering trees using Graphviz
+### `results/`
+- `final_results/` – Output per fold (models, metrics, SHAP, etc.)  
+- `visualize_tree.py` – Script for rendering trees using Graphviz  
+- `elbow_locator.py` – Detects elbow point on Pareto front using KneeLocator  
 
 ---
 

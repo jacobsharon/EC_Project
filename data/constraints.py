@@ -75,7 +75,7 @@ nominal_values_constraints_dict = {
 feature_types = {
     'age': 'numerical',
     'bp': 'numerical',
-    'sg': 'numerical',
+    'sg': 'nominal',
     'al': 'nominal',
     'su': 'nominal',
     'rbc': 'binary',
