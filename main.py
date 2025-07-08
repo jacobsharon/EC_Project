@@ -241,8 +241,8 @@ for fold_index, (X_train, X_test, y_train, y_test) in enumerate(folds):
     ###############################################
     # 12. Save tree visualizations and text files #
     ###############################################
-    for i, tree in enumerate(best_pareto_fronts[49]):
-        save_best_tree_as_image(tree, f"{tree_dir}/Gen_50_Tree{i+1}")   # Use 1-based index for consistency
+    for i, tree in enumerate(gen_50_unique):
+        save_best_tree_as_image(tree, f"{tree_dir}/Fold{fold_index + 1}_Individual{i + 1}")   # Use 1-based index for consistency
 
     with open(os.path.join(base_dir, "Gen_50_Tree_Functions.txt"), "w") as f:
         for i, tree in enumerate(gen_50_unique):
