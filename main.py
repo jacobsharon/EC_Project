@@ -348,7 +348,11 @@ for fold_index, (X_train, X_test, y_train, y_test) in enumerate(folds):
     # Save the best individual’s index and function string to a text file
     with open(os.path.join(base_dir, "Best_Tree.txt"), "w") as f:
         f.write(f"Individual {best_tree_index}:\n")
-        f.write(f"Function: {str(best_tree)}\n")
+        f.write(f"Function: {str(best_tree)}\n\n")
+        f.write("=== Evaluation Metrics ===\n")
+        for k, v in best_metrics.items():
+            if k not in {"Function", "Type"}:
+                f.write(f"{k}: {v:.4f}\n")
 
     ###############################################
     # 15. Evaluate and store elbow model if found #
@@ -398,7 +402,11 @@ for fold_index, (X_train, X_test, y_train, y_test) in enumerate(folds):
         # Save the elbow-point tree function to text file
         with open(os.path.join(base_dir, "Elbow_Tree.txt"), "w") as f:
             f.write(f"Individual {elbow_tree_index}:\n")
-            f.write(f"Function: {str(elbow_tree)}\n")
+            f.write(f"Function: {str(elbow_tree)}\n\n")
+            f.write("=== Evaluation Metrics ===\n")
+            for k, v in elbow_metrics.items():
+                if k not in {"Function", "Type"}:
+                    f.write(f"{k}: {v:.4f}\n")
 
         # Store metrics for this fold to be used in overall summary
         fold_metrics.append(elbow_metrics)

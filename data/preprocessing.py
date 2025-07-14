@@ -40,9 +40,10 @@ import pandas as pd
 import numpy as np
 
 # Local Application Modules
-from constraints import numerical_value_constraints_dict
+from .constraints import numerical_value_constraints_dict
 
 file_path = "/Users/jacobsharon/Documents/Masters Degree/Summer 2025/CSC742/Project/EC_Project/data/datasets/raw_ckd_dataset.csv"
+
 
 ##########################################################
 # 1. Read and preprocess CKD dataset for downstream use #
@@ -114,10 +115,10 @@ with open(file_path, "r") as CKD:
     means_df = pd.read_csv("data/default_attribute_values/numeric_attribute_averages.csv")
     means_dict = dict(zip(means_df["attribute"], means_df["formatted_mean"]))
 
-    for col in means_dict:
+    for col in numeric_columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
-    df.fillna(value=means_dict, inplace=True)
+    df[numeric_columns] = df[numeric_columns].fillna(value=means_dict)
 
     # 1.10 Replace missing categorical values using predefined defaults
     default_cat_df = pd.read_csv("data/default_attribute_values/categorical_attribute_defaults.csv")
@@ -136,10 +137,34 @@ with open(file_path, "r") as CKD:
     for col in encode_columns:
         df[col] = pd.Categorical(df[col]).codes
 
-    # 1.13 Apply constraints for numerical features defined in constraints.py
-    for col, (min_value, max_values) in numerical_value_constraints_dict.items():
-        if col in df[col]:
-            df = df[df[col].between(min_value, max_values)]
+    # Ensure all constrained columns are numeric
+    for col in numerical_value_constraints_dict:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
 
-    # 1.14 Export the final cleaned dataset to CSV for use in modeling
+    # 1.13 Apply constraints for numerical features defined in constraints.py
+    constraint_mask = pd.Series(True, index=df.index)
+    violations_log = []
+
+    for col, (min_value, max_values) in numerical_value_constraints_dict.items():
+        if col in df.columns:
+            outside_range = ~df[col].between(min_value, max_values, inclusive='both')
+            for idx in df[outside_range].index:
+                violations_log.append({
+                    "index": idx,
+                    "attribute": col,
+                    "value": df.at[idx, col],
+                    "constraint_range": f"{min_value} - {max_values}"
+                })
+            constraint_mask &= ~outside_range
+
+    # 1.14 Save constraint violations to CSV
+    if violations_log:
+        violations_df = pd.DataFrame(violations_log)
+        violations_df = violations_df.sort_values(by="index")
+        violations_df.to_csv("data/datasets/violated_rows_with_constraints.csv", index=False)
+
+    df = df[constraint_mask]
+
+    # 1.15 Export the final cleaned dataset to CSV for use in modeling
     df.to_csv("data/datasets/cleaned_ckd_dataset.csv", index=False)
