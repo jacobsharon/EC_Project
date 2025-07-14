@@ -16,7 +16,8 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 
 ### `data/`
 - `raw_ckd_dataset.csv` – Original dataset  
-- `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing  
+- `cleaned_ckd_dataset.csv` – Cleaned dataset after preprocessing 
+- `violated_rows_with_constraints.csv` - All rows removed during cleaning and imputation. 
 - `default_attribute_values/` – Reference values for imputing missing values  
 
 ### `classification_model/`
