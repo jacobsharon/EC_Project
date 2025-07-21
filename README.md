@@ -1,8 +1,8 @@
 # EC_Project
 
-## Explainable Multi-Objective Genetic Programming for Chronic Kidney Disease Classification Using NSGA-II
+## Explainable Multi-Objective Genetic Feature Selection for Chronic Kidney Disease Classification Using NSGA-II
 
-This project uses Genetic Programming combined with NSGA-II and SHAP analysis to optimize the classification of Chronic Kidney Disease (CKD) while maintaining interpretability. A multi-objective approach is used to balance classification performance and model simplicity. SHAP analysis is incorporated to provide feature-level explanations, yielding a final model that is both accurate and clinically interpretable.
+This project uses Genetic Programming combined with NSGA-II and SHAP analysis to optimize feature selection for classification of Chronic Kidney Disease (CKD) while maintaining interpretability. A multi-objective approach is used to balance classification performance and model simplicity. SHAP analysis is incorporated to provide feature-level explanations, yielding a final model that is both accurate and clinically interpretable.
 
 ---
 
