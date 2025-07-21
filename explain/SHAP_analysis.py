@@ -17,7 +17,7 @@ from deap import gp
 # Local Application Modules
 from genetic_programming.primitives import primitive_set
 from classification_model.classification_model import initialize_classification_model
-from settings import MAX_DEPTH, POPULATION
+from settings import POPULATION
 
 #############################################################
 # 1. GPModelWrapper: Callable wrapper around compiled trees #
