@@ -40,27 +40,57 @@ This project uses Genetic Programming combined with NSGA-II and SHAP analysis to
 
 ---
 
-## Recommended Environment
+## Steps to Run
 
-- Python 3.12.4
+Follow the steps below to run the project from start to finish.
 
----
+### 1. Install Dependencies
 
-## Install Dependencies
+Recommended environment Python 3.12.4. Then install all required packages using:
 
 ```bash
-pip install -r requirements.tx
+pip install -r requirements.txt
 ```
 
-## Usage
+### 2. Set Global Parameters
+
+Open the `settings.py` file and configure any global parameters as needed.  
+Examples of parameters to set:
+
+- `POP_SIZE`: population size for the genetic algorithm
+- `GENERATIONS`: number of generations
+- `RANDOM_SEED`: seed for reproducibility
+
+### 3. Run Main Script
+
+Execute the main script to begin training and evaluating symbolic models.  
+This process may take a significant amount of time depending on your hardware and parameters:
+
 ```bash
 python main.py
 ```
 
-## Output
-- Pareto front visualization (F1-score vs Complexity)
-- SHAP summary plots
-- CSV log
+The script will perform:
+
+- 5-fold cross-validation
+- Multi-objective optimization using NSGA-II
+- Evaluation of best and elbow-point models per fold
+- Metric recording and result saving
+
+### 4. Run SHAP Analysis
+
+Once `main.py` finishes executing, run the SHAP analysis to interpret feature importance for the evolved models.  
+This step may also take time depending on the complexity of the models:
+
+```bash
+python -m SHAP_analysis.py
+```
+
+The SHAP script will:
+
+- Load saved models from each fold
+- Compute SHAP values per feature
+- Generate summary plots and store them in the output directory
 
 ## Objectives 
 - Develop interpretable GP-based classifiers for CKD detection
@@ -70,8 +100,6 @@ python main.py
 
 ## References
 - UCI CKD Dataset: https://doi.org/10.24432/C5G020
-- NSGA-II: Deb et al., 2002
-- SHAP: Lundberg & Lee, 2017 (https://github.com/slundberg/shap)
 
 ## Author
 Jacob Sharon, BS, MLS(ASCP)<sup>CM</sup>  
